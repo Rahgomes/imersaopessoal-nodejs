@@ -1,0 +1,53 @@
+Configuração do ESLINT para validação de erros nos projetos:
+
+Configuração do eslint
+npx eslint --init
+
+Após a escolha das opções das configurações, ele irá gerar um arquivo .eslintrc.js e lá terão as configurações que você pré-selecionou durante as respostas das perguntas. No objeto de "Rules", seão onde você irá desativar os erros que deseja, por exemplo: rules: { quotes: "off", "import/first": "off" }
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Configuração do Editor universal, importante para editores que usam em SO diferentes para os VSCodes:
+
+Instalar a extensão EditorConfig for VS Code;
+Clique com o botão direito onde se encontram as pastas/arquivos do projeto e selecione "Gerar .editorconfig";
+Configurações:
+
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Configuração do nodemon juntamente com o sucrase para suporte ao import/export do ES6
+
+Iniciar um arquivo na raíz do projeto com o nome "nodemon.json";
+Incluir o código abaixo:
+
+{
+  "execMap": {
+    "js": "node -r sucrase/register"
+  }
+}
+
+Depois disso criar um script dentro do package.json:
+"dev": "nodemon server.js"
+
+O server.js é o nome no qual será escutado pelo nodemon/sucrase na hora da compilação, seu nome pode ser qualquer um: index.js, server.js e por ai vai.
+Para executar seu comando no terminal ficaria como: npm run dev
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Sequelize
+
+Comando para criar uma tabela dentro da base de dados e consequentemente uma migration para configuração:
+npx sequelize migration:create --name=ferramentas
+
+Comando utilizado após a configuração da migration para de fato subir a tabela na base de dados:
+npx sequelize db:migrate
+
+Comando para reverter a inclusão da migrate mais recente, recomendado usar logo após efetuar o db:migrate:
+npx sequelize db:migrate:undo
